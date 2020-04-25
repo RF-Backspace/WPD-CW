@@ -1,0 +1,14 @@
+extends layout
+
+mixin message(opp, name)
+    if(opp)
+        h3.greeting Welcome  
+            span=name
+    
+        h4.greeting View Incomplete Coursework Projects
+
+block content
+    include includes/header
+    .dashboard 
+        .student 
+            +message(opp, name)
