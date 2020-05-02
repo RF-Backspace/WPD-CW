@@ -1,0 +1,32 @@
+{{> includes/header }}
+
+ {{#opp}}
+        <h3 class="greeting"> Welcome  {{name}}</h3>
+ {{/opp}}
+
+    {{> includes/navigation}}
+    <div class="dashboard">
+        <div class="student">
+            <h4 class="greeting"> View Incomplete Coursework Projects </h4>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Milestones</th>
+                    <th>Due Date</th>
+                    <th>Completion Date</th>
+                    <th>Completion Status</th>
+                 </tr>
+            {{#courseworks}}
+                <tr>
+                    <td>{{title}}</td>
+                    <td>{{milestones}}</td>
+                    <td>{{duedate}}</td>
+                    <td>{{completiondate}}</td>
+                    <td>{{completed}}</td>
+                </tr>
+            {{/courseworks}}
+         </table>
+    </div>
+{{> includes/footer }}

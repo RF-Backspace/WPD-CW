@@ -28,6 +28,11 @@ nav ul li a:hover
 {
     background-color: #77b0d6;
 }
+.form-text{
+  float: left;
+  font-size: x-small;
+  padding: 0;
+}
 .page-wrapper
 {
     width: 960px;
@@ -49,6 +54,11 @@ input[type="text"], input[type="password"]
     font-size: 1.05em;
     background-color: #F5F5F5;
     border: 1px solid #ccc;
+}
+input[type="date"]
+{
+  background-color: #F5F5F5;
+  color: darkgray;
 }
 input[type="submit"]
 {
@@ -79,7 +89,6 @@ input[type="submit"]:hover
 .dashboard
 {
     border: 0.1px solid #ccc;
-    background-color: #fff;
 }
 
 .user-post-area
@@ -96,10 +105,12 @@ textarea
     box-sizing: border-box;
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 0;
     font-size: 18px;
     padding: 10px;
     resize: vertical;
+    background-color: #F5F5F5;
+    margin: 0 0 15px;
 }
 .post
 {
@@ -171,6 +182,12 @@ p
   transition: all 0.3 ease;
   cursor: pointer;
 }
+.success-msg{
+  color : #4CAF50;
+}
+.error-msg{
+  color : #EF3B3A;
+}
 .form button:hover,.form button:active,.form button:focus {
   background: #528fb8;
 }
@@ -186,39 +203,6 @@ p
 .form .register-form {
   display: none;
 }
-.container {
-  position: relative;
-  z-index: 1;
-  max-width: 300px;
-  margin: 0 auto;
-}
-.container:before, .container:after {
-  content: "";
-  display: block;
-  clear: both;
-}
-.container .info {
-  margin: 50px auto;
-  text-align: center;
-}
-.container .info h1 {
-  margin: 0 0 15px;
-  padding: 0;
-  font-size: 36px;
-  font-weight: 300;
-  color: #1a1a1a;
-}
-.container .info span {
-  color: #4d4d4d;
-  font-size: 12px;
-}
-.container .info span a {
-  color: #000000;
-  text-decoration: none;
-}
-.container .info span .fa {
-  color: #EF3B3A;
-}
 body {
   background: #528fb8; /* fallback for old browsers */
   background: -webkit-linear-gradient(right, #528fb8, #528fb8);
@@ -228,4 +212,31 @@ body {
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+table {
+  background: #f5f5f5;
+  border-collapse: collapse;
+  box-shadow: inset 0 1px 0 #fff;
+  font-size: 12px;
+  line-height: 24px;
+  margin: 30px auto;
+  text-align: left;
+  width: 800px;
+}
+thead{
+  background: darkgray;
+}
+th, td {
+  padding: 0.25rem;
+  text-align: left;
+  border: 1px solid #ccc;
+}
+select{
+  position: relative;
+  display: block;
+  width: 100%;
+  font-family: 'Open Sans', 'Helvetica Neue', 'Segoe UI', 'Calibri', 'Arial', sans-serif;
+  font-size: 18px;
+  color: #60666d;
+  margin-bottom: 25px;
 }
