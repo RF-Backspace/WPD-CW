@@ -1,20 +1,22 @@
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
-const pageRouter = require('./navigation/nav');
+const mustacheExpress = require('mustache-express');
+const controller = require('./controllers/routes');
 const app = express();
+
+app.engine('mustache', mustacheExpress());
 
 // for body parser. to collect data that sent from the client.
 app.use(express.urlencoded( { extended : false}));
 
 
 // Serve static files. CSS, Images, JS files ... etc
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.resolve(__dirname, 'public')));
 
-
-// Template engine. PUG
+// Template engine. mustache
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set('view engine', 'mustache');
 
 // session
 app.use(session({
@@ -26,8 +28,7 @@ app.use(session({
     }
 }));
 
-// Routers
-app.use('/', pageRouter);
+app.use('/', controller);
 
 // Setting up the server
 app.listen(8000, () => {

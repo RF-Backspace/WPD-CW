@@ -1,0 +1,23 @@
+{{> includes/header }}
+
+ {{#opp}}
+        <h3 class="greeting"> Welcome  {{name}}</h3>
+ {{/opp}}
+
+    {{> includes/navigation}}
+    <div class="dashboard">
+        <div class="student">
+            <h4 class="greeting"> Modify Coursework Project </h4>
+        </div>
+        <div class="form">
+            {{> includes/modify-coursework-form}}
+            {{#successmsg}}
+                <div class="success-msg">{{successmsg}}</div>
+            {{/successmsg}}
+            {{#errormsg}}
+                <div class="error-msg">{{errormsg}}</div>
+            {{/errormsg}}
+        </div>
+    </div>
+
+{{> includes/footer }}
