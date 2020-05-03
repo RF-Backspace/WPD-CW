@@ -32,7 +32,7 @@ app.use('/', controller);
 
 // Setting up the server
 app.listen(8000, () => {
-    console.log('Server is running on port 8000...');
+    console.log('Server is running on port 8000, Ctrl+C to stop running...');
 });
 
 module.exports = app;
