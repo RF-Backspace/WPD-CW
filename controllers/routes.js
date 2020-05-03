@@ -23,6 +23,9 @@ controller.get('/', (req, res) => {
     res.render('index', {title:"Coursework Scheduling Application"});
 })
 
+controller.get('/register',(req,res)=> {
+    res.render('register',{title:'Coursework Scheduling Application'});
+});
 // Get home page
 controller.get('/home', (req, res) => {
     let student = req.session.student;

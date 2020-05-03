@@ -200,9 +200,6 @@ p
   color: #528fb8;
   text-decoration: none;
 }
-.form .register-form {
-  display: none;
-}
 body {
   background: #528fb8; /* fallback for old browsers */
   background: -webkit-linear-gradient(right, #528fb8, #528fb8);
