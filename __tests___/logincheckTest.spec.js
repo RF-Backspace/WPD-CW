@@ -5,7 +5,7 @@ function filterByTerm(inputArr, searchTerm){
 }
 //Username and password match
 describe('Filter function',()=> {
-    test('it should filter by a search term(username)',() => {
+    test('Case 1 pass, Username and password both match',() => {
         const input = [
             {id:1, username:'Tom',password:'pa123'},
             {id:2, username:'ANN',password:'pa123'},
@@ -19,7 +19,7 @@ describe('Filter function',()=> {
 
 //Username matches, password does not match
 describe('Filter function',()=> {
-    test('it should filter by a search term(username)',() => {
+    test('Case 2 should fail, username matches, password does not match',() => {
         const input = [
             {id:1, username:'Tom',password:'pa123'},
             {id:2, username:'ANN',password:'pa123'},
@@ -33,7 +33,7 @@ describe('Filter function',()=> {
 
 //Username mismatch, password match
 describe('Filter function',()=> {
-    test('it should filter by a search term(username)',() => {
+    test('Case 3 should fail, username mismatches, password match',() => {
         const input = [
             {id:1, username:'Tom',password:'pa123'},
             {id:2, username:'ANN',password:'pa123'},
@@ -47,7 +47,7 @@ describe('Filter function',()=> {
 
 //Account does not exist
 describe('Filter function',()=> {
-    test('it should filter by a search term(username)',() => {
+    test('Case 4 should fail, account does not exist',() => {
         const input = [
             {id:1, username:'Tom',password:'pa123'},
             {id:2, username:'ANN',password:'pa123'},
