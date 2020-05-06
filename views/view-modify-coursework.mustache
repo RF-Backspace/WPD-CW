@@ -1,23 +1,39 @@
 {{> includes/header }}
 
- {{#opp}}
-        <h3 class="greeting"> Welcome  {{name}}</h3>
- {{/opp}}
+{{#opp}}
+<h3 class="greeting"> Welcome  {{name}}</h3>
+{{/opp}}
 
-    {{> includes/navigation}}
-    <div class="dashboard">
-        <div class="student">
-            <h4 class="greeting"> Modify Coursework Project </h4>
-        </div>
-        <div class="form">
-            {{> includes/modify-coursework-form}}
-            {{#successmsg}}
-                <div class="success-msg">{{successmsg}}</div>
-            {{/successmsg}}
-            {{#errormsg}}
-                <div class="error-msg">{{errormsg}}</div>
-            {{/errormsg}}
-        </div>
+{{> includes/navigation}}
+<div class="dashboard">
+    <div class="student">
+        <h4 class="greeting"> Modify Courseworks </h4>
     </div>
-
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Milestones</th>
+                <th>Due Date</th>
+                <th>Completion Date</th>
+                <th>Completion Status</th>
+                <th>Edit</th>
+            </tr>
+            {{#courseworks}}
+            <tr>
+                <td>{{title}}</td>
+                <td>{{milestones}}</td>
+                <td>{{duedate}}</td>
+                <td>{{completiondate}}</td>
+                {{#completed}}
+                    <td>Yes</td>
+                {{/completed}}
+                {{^completed}}
+                    <td>No</td>
+                {{/completed}}
+                <td><a href="/modify?id={{_id}}"> Edit</a></td>
+            </tr>
+            {{/courseworks}}
+    </table>
+</div>
 {{> includes/footer }}

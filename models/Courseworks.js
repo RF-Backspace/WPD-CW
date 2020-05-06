@@ -54,7 +54,22 @@ class Courseworks {
                     console.log('getAllCourseworks Promise rejected -', err);
                 } else {
                     resolve(entries);
-                    console.log('getAllCourseworks Promise resolved -', entries);
+                    console.log('getAllCourseworks Promise resolved');
+                }
+            });
+        });
+    }
+
+    //retrieve coursework
+    getCoursework(courseworkid, username) {
+        return new Promise((resolve, reject) => {
+            this.db.find({"_id":courseworkid, "username":username}, function (err, entries) {
+                if (err) {
+                    reject(err);
+                    console.log('getCoursework Promise rejected -', err);
+                } else {
+                    resolve(entries);
+                    console.log('getCoursework Promise resolved');
                 }
             });
         });
@@ -70,31 +85,33 @@ class Courseworks {
                     console.log('getAllIncompleteCourseworks Promise rejected -', err);
                 } else {
                     resolve(entries);
-                    console.log('getAllIncompleteCourseworks Promise resolved -', entries);
+                    console.log('getAllIncompleteCourseworks Promise resolved');
                 }
             });
         });
     }
 
-    //update Coursework
-    updateCoursework(courseworkid, username, updatedTitle, updatedMilestones, updatedDuedate, updatedCompletiondate, updatedCompleteStatus) {
+    //update coursework
+    updateCoursework(username, coursework) {
         return new Promise((resolve, reject) => {
-            this.db.update({"_id": courseworkid, "username": username}, { $set: { "title": updatedTitle, "milestones": updatedMilestones, "duedate": updatedDuedate, "completiondate": updatedCompletiondate, "completed":updatedCompleteStatus }},
-            function (err, numUpdated) {
-                if (err) {
-                    console.log('Error updating coursework', courseworkid, err);
-                    reject(err);
-                } else {
-                    console.log('updated coursework:', courseworkid, numUpdated);
-                    resolve(entries);
-                }
-            });
+            let courseworkid = coursework._id, newTitle=coursework.title, newMilestones=coursework.milestones, newDueDate=coursework.duedate, newCompletionDate=coursework.completiondate;
+            this.db.update({ "_id": courseworkid , "username": username}, { $set: { "title": newTitle, "milestones": newMilestones, "duedate": newDueDate, "completiondate": newCompletionDate , "completed": coursework.completed} },
+                function (err, numReplaced) {
+                    if (err) {
+                        console.log('Error updating coursework', title, err);
+                        reject(err);
+                    } else {
+                        console.log('updated coursework');
+                        resolve(numReplaced);
+                    }
+                });
         });
     }
 
     //share Coursework
     shareCoursework(courseworkid, username, sharingUsername) {
         return new Promise((resolve, reject) => {
+            let that = this;
             this.db.find({"username":username, "_id":courseworkid}, function (err, entries) {
                 if (err) {
                     reject(err);
@@ -108,12 +125,12 @@ class Courseworks {
                         completed: entries[0].completed,
                         username:sharingUsername
                     };
-                    this.db.insert(entry, function (err, coursework) {
+                    that.db.insert(entry, function (err, coursework) {
                         if (err) {
                             console.log("Error inserting document into database", err);
                             reject(err);
                         } else {
-                            console.log('add coursework:', coursework);
+                            console.log('coursework shared:', coursework);
                             resolve(coursework);
                         }
                     });

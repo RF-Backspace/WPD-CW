@@ -1,0 +1,45 @@
+{{> includes/header }}
+
+ {{#opp}}
+        <h3 class="greeting"> Welcome  {{name}}</h3>
+ {{/opp}}
+
+    {{> includes/navigation}}
+{{#coursework}}
+    <div class="dashboard">
+        <div class="student">
+            <h4 class="greeting"> Modify Coursework : {{title}} </h4>
+        </div>
+        <div class="form">
+            <form method="post" action="/modify-it">
+                <input type="hidden" name="courseworkid" value="{{_id}}"/>
+                <input type="text" name="title" placeholder="title" value="{{title}}" />
+                <textarea name="milestones" placeholder="milestones">{{milestones}}</textarea>
+                <p class="form-text"> Due Date:</p>
+                <input type="date" name="duedate" value={{duedate}} />
+                <p class="form-text"> Completion Date:</p>
+                <input type="date" name="completiondate" value={{completiondate}} />
+                <p class="form-text"> Completed:</p>
+                <select name="completed">
+                {{#completed}}
+                    <option value="true" selected>Yes</option>
+                    <option value="false">No</option>
+                {{/completed}}
+                {{^completed}}
+                    <option value="true">Yes</option>
+                    <option value="false" selected>No</option>
+                {{/completed}}
+                </select>
+                <input type="submit" value="Save Coursework details" />
+            </form>
+            {{#successmsg}}
+                <div class="success-msg">{{successmsg}}</div>
+            {{/successmsg}}
+            {{#errormsg}}
+                <div class="error-msg">{{errormsg}}</div>
+            {{/errormsg}}
+        </div>
+    </div>
+{{/coursework}}
+
+{{> includes/footer }}

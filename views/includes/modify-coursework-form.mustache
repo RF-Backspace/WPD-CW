@@ -1,9 +1,0 @@
-<form method="post" action="/modify-coursework">
-    <select name="courseworkid">
-        <option value="0"> -Select Coursework-</option>
-        {{#courseworksIdTitles}}
-            <option value={{id}}> {{title}} </option>
-        {{/courseworksIdTitles}}
-    </select>
-    <input type="submit" value="Modify Coursework" />
-</form>

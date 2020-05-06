@@ -81,7 +81,7 @@ controller.get('/view-all-coursework', (req, res) => {
             let courseworks = [];
             if(results){
                     results.forEach(function(item){
-                    let coursework = {'title':item.title, 'milestones':item.milestones, 'duedate':item.duedate, 'completiondate':item.completiondate,'completed':item.completed == 0 ? "Incomplete":"Completed"};
+                    let coursework = {'title':item.title, 'milestones':item.milestones, 'duedate':item.duedate, 'completiondate':item.completiondate,'completed':item.completed == 0 ? "No":"Yes"};
                     courseworks.push(coursework);
                 });
             }
@@ -97,21 +97,57 @@ controller.get('/view-all-coursework', (req, res) => {
 controller.get('/view-modify-coursework', (req, res) => {
     let student = req.session.student;
 
-    if(student) {
-        courseworkDAO.getAllCourseworks(student.username).then((results)=>{
-            let courseworksIdTitles = [];
-            if(results){
-                results.forEach(function(item){
-                    let coursework = {'title':item.title, 'id':item._id};
-                    courseworksIdTitles.push(coursework);
-                });
+    if (student) {
+        courseworkDAO.getAllCourseworks(student.username).then((results) => {
+            if (results) {
+                res.render('view-modify-coursework', { opp: req.session.opp, name: student.fullname, courseworks: results });
             }
-            res.render('view-modify-coursework', {opp:req.session.opp, name:student.fullname, courseworksIdTitles:courseworksIdTitles});
             return;
         });
+    } else {
+        res.redirect('/');
     }
-    res.redirect('/');
 });
+
+//post modify coursework
+controller.post('/modify-it', (req, res) => {
+    let student = req.session.student;
+
+    if (student) {
+        let coursework = {
+            _id : req.body.courseworkid,
+            title : req.body.title,
+            milestones : req.body.milestones,
+            duedate : req.body.duedate,
+            completiondate : req.body.completiondate,
+            completed : req.body.completed == "true" ? true:false
+        };
+
+        courseworkDAO.updateCoursework(student.username, coursework).then((status)=>{
+            if(status){
+                res.render('modify-coursework', { opp: req.session.opp, name: student.fullname, successmsg: "Coursework modified successfully", coursework: coursework});
+            }else{
+                res.render('modify-coursework', { opp: req.session.opp, name: student.fullname, errormsg: "Error modifying coursework", coursework: coursework});
+            }
+        });
+    } else {
+        res.redirect('/');
+    }
+
+});
+
+// get modify page
+controller.get('/modify', function (req, res) {
+    let student = req.session.student;
+    if(student){
+        let courseworkid = req.query.id;
+        courseworkDAO.getCoursework(courseworkid, student.username).then((results)=>{
+            res.render('modify-coursework', { opp: req.session.opp, name: student.fullname, coursework: results });
+        });
+    } else {
+        res.redirect('/');
+    }
+})
 
 // Get view remove coursework page
 controller.get('/view-remove-coursework', (req, res) => {
@@ -174,10 +210,63 @@ controller.get('/view-share-coursework', (req, res) => {
     let student = req.session.student;
 
     if(student) {
-        res.render('view-share-coursework', {opp:req.session.opp, name:student.fullname});
+        let courseworksIdTitles = [];
+        let studentsUsernameFullnames = [];
+        courseworkDAO.getAllCourseworks(student.username).then((results)=>{
+            if(results){
+                results.forEach(function(item){
+                    let coursework = {'title':item.title, 'id':item._id};
+                    courseworksIdTitles.push(coursework);
+                });
+            }
+        });
+        studentDAO.getAllStudents().then((users)=>{
+            if(users){
+                users.forEach(function(item){
+                    let user = {'fullname':item.fullname, 'username':item.username};
+                    studentsUsernameFullnames.push(user);
+                });
+            }
+        });
+        res.render('view-share-coursework', {opp:req.session.opp, name:student.fullname, courseworksIdTitles:courseworksIdTitles, students:studentsUsernameFullnames});
         return;
+    }else{
+        res.redirect('/');
     }
-    res.redirect('/');
+});
+
+// Post share coursework
+controller.post('/share-coursework', (req, res) => {
+    let student = req.session.student;
+
+    if(student) {
+        courseworkDAO.shareCoursework(req.body.courseworkid, student.username, req.body.sharewithusername).then((coursework)=>{
+            if(coursework){
+                let courseworksIdTitles = [];
+                let studentsUsernameFullnames = [];
+                courseworkDAO.getAllCourseworks(student.username).then((results)=>{
+                    if(results){
+                        results.forEach(function(item){
+                            let coursework = {'title':item.title, 'id':item._id};
+                            courseworksIdTitles.push(coursework);
+                        });
+                        studentDAO.getAllStudents().then((users)=>{
+                            if(users){
+                                users.forEach(function(item){
+                                    let user = {'fullname':item.fullname, 'username':item.username};
+                                    studentsUsernameFullnames.push(user);
+                                });
+                                res.render('view-share-coursework', {opp:req.session.opp, name:student.fullname, courseworksIdTitles:courseworksIdTitles, students:studentsUsernameFullnames, successmsg:"You just shared your coursework."});
+                                return;
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }else{
+        res.redirect('/');
+    }
 });
 
 // Post login data
