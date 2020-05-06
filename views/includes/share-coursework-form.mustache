@@ -1,5 +1,16 @@
 <form method="post" action="/share-coursework">
-    <select name="title">
+    <select name="courseworkid">
         <option value="0"> -Select Coursework-</option>
+        {{#courseworksIdTitles}}
+            <option value={{id}}> {{title}} </option>
+        {{/courseworksIdTitles}}
     </select>
+    <br>
+    <select name="sharewithusername">
+        <option value="0"> -Select User-</option>
+        {{#students}}
+            <option value={{username}}> {{fullname}} </option>
+        {{/students}}
+    </select>
+    <input type="submit" value="Share" />
 </form>

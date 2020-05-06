@@ -1,8 +1,9 @@
 <form method="post" action="/add-coursework" class="add-coursework-form">
-    <input type="text" name="title" placeholder="title" />
+    <input type="text" name="title" placeholder="title" required/>
     <textarea name="milestones" placeholder="milestones"></textarea>
     <p class="form-text"> Due Date:</p>
-    <input type="date" name="duedate" />
+    <input type="date" name="duedate" required/>
     <p class="form-text"> Completion Date:</p>
-    <input type="date" name="completiondate" />
+    <input type="date" name="completiondate" value=""/>
     <input type="submit" value="Add Coursework" />
+</form>
